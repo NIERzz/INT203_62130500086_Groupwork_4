@@ -20,28 +20,31 @@
   <body>
     <div id="container" class="m-5 max-w-xl mx-auto">
       <div>
-        <h1 class="flex justify-center items-center text-3xl font-bold">Photo Gallery ({{countphoto}})</h1>
-            
+        <div class="flex justify-center items-center text-3xl font-bold">
+        <h1>Photo Gallery ({{countphoto}})</h1>
+        <button class="pl-10" v-show="searchbtn" @click="mouseclicksearch"><img src="images/search.png"></button>
+        </div>
+        <input  v-show="inputbtn" type="text" v-model="searchphoto" placeholder="Enter a new task ..." class="p-2 ml-40 mt-5 bg-white rounded flex-1 border-b-2 border-blue-300 " @keyup.enter="searchingphoto" />
+        <button v-show="cancelbtn" @click="mouseclickcancel" class="bg-blue-200 rounded ml-3 p-2 text-xl text-white hover:bg-blue-300 hover:text-black">Cancel</button>
+        
+        <div v-show="popup" class="text-right bg-black px-9 pb-9">
+          <button v-on:click="popup=false" class="m-1 text-2xl text-white">X</button>
+          <img :src="bigphos">
+        </div>
+        
+        <div>
                 <ul class="flex flex-col space-y-5 ">
-                  <li v-for="(photo,index) in photos" class="flex items-center mt-5">
-                    <button v-on:click="toggleheart(index)" ><img :src="photo.url" width="200" height="200"></button>
-                    <span class="text-xl font-medium ml-5 w-64" >{{ photo.alt }}</span>
+                  <li v-show="photo.show" v-for="(photo,index) in photos" class="flex items-center mt-5 ">
+                    <button v-on:click="popupfunc(index)" v-on:dblclick="toggleheart(index)" ><img :src="photo.url" width="200" height="200"></button>
+                    <span  class="text-xl font-medium ml-5 w-64" >{{ photo.alt }}</span>
                     <span v-show="photo.done" class="ml-5"><img src="images/heart.png" width="25"></span>
                   </li>
-                  
-                 
-
-
-
+                  <li> {{ checkItems }} </li>
                 </ul>
-
-
-
-            
-
+        </div>
       </div>  
-      
     </div>
+    
   
     <!-- my main.js -->
     <script src="./main.js"></script>
